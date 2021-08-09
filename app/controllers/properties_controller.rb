@@ -4,25 +4,30 @@ class PropertiesController < ApplicationController
   # GET /properties or /properties.json
   def index
     @properties = Property.all
+    
   end
 
   # GET /properties/1 or /properties/1.json
   def show
+    @stations = @property.stations
   end
 
   # GET /properties/new
   def new
     @property = Property.new
+    @property.stations.build
+    @property.stations.build
   end
 
   # GET /properties/1/edit
   def edit
+    @property.stations.build
   end
 
   # POST /properties or /properties.json
   def create
     @property = Property.new(property_params)
-
+  
     respond_to do |format|
       if @property.save
         format.html { redirect_to @property, notice: "Property was successfully created." }
@@ -36,6 +41,9 @@ class PropertiesController < ApplicationController
 
   # PATCH/PUT /properties/1 or /properties/1.json
   def update
+    
+    binding.pry
+    
     respond_to do |format|
       if @property.update(property_params)
         format.html { redirect_to @property, notice: "Property was successfully updated." }
@@ -64,6 +72,16 @@ class PropertiesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def property_params
-      params.require(:property).permit(:name, :rent, :address, :building_age, :remarks)
+      params.require(:property).permit(
+        :name, 
+        :rent, 
+        :address, 
+        :building_age, 
+        :remarks,
+        stations_attributes:[
+          :railway_name,
+          :station_name,
+          :distance
+        ])
     end
 end
