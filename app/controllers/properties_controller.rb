@@ -16,7 +16,6 @@ class PropertiesController < ApplicationController
   def new
     @property = Property.new
     @property.stations.build
-    @property.stations.build
   end
 
   # GET /properties/1/edit
@@ -27,7 +26,6 @@ class PropertiesController < ApplicationController
   # POST /properties or /properties.json
   def create
     @property = Property.new(property_params)
-  
     respond_to do |format|
       if @property.save
         format.html { redirect_to @property, notice: "Property was successfully created." }
@@ -41,8 +39,6 @@ class PropertiesController < ApplicationController
 
   # PATCH/PUT /properties/1 or /properties/1.json
   def update
-    
-    binding.pry
     
     respond_to do |format|
       if @property.update(property_params)
@@ -79,6 +75,7 @@ class PropertiesController < ApplicationController
         :building_age, 
         :remarks,
         stations_attributes:[
+          :id,
           :railway_name,
           :station_name,
           :distance
